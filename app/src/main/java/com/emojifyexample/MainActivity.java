@@ -22,6 +22,7 @@ import androidx.core.content.FileProvider;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import butterknife.BindView;
@@ -182,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
      * OnClick method for the save button.
      */
     @OnClick(R.id.save_button)
-    public void saveMe() {
+    public void saveMe()  {
         // Delete the temporary image file
         BitmapUtils.deleteImageFile(this, mTempPhotoPath);
 
@@ -194,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
      * OnClick method for the share button, saves and shares the new bitmap.
      */
     @OnClick(R.id.share_button)
-    public void shareMe() {
+    public void shareMe()  {
         // Delete the temporary image file
         BitmapUtils.deleteImageFile(this, mTempPhotoPath);
 

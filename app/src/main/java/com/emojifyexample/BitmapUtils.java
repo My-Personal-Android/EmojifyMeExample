@@ -4,15 +4,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -106,12 +110,13 @@ class BitmapUtils {
      *
      * @param imagePath The path of the saved image
      */
-    private static void galleryAddPic(Context context, String imagePath) {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(imagePath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        context.sendBroadcast(mediaScanIntent);
+    private static void galleryAddPic(Context context, String imagePath,String imageFileName) {
+        try {
+            MediaStore.Images.Media.insertImage(context.getContentResolver(),imagePath,imageFileName,"Description by Awais Mansha");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -131,8 +136,12 @@ class BitmapUtils {
                 Locale.getDefault()).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + ".jpg";
         File storageDir = new File(
-                context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+                context.getExternalFilesDir(Environment.DIRECTORY_DCIM)
                         + "/Emojify");
+// Also works
+//        File storageDir = new File(
+//                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
+//                        + "/Camera/");
         boolean success = true;
         if (!storageDir.exists()) {
             success = storageDir.mkdirs();
@@ -151,7 +160,7 @@ class BitmapUtils {
             }
 
             // Add the image to the system gallery
-            galleryAddPic(context, savedImagePath);
+            galleryAddPic(context, savedImagePath,imageFileName);
 
             // Show a Toast with the save location
             String savedMessage = context.getString(R.string.saved_message, savedImagePath);
