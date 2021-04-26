@@ -56,7 +56,7 @@ class BitmapUtils {
         bmOptions.inJustDecodeBounds = false;
         bmOptions.inSampleSize = scaleFactor;
 
-        return BitmapFactory.decodeFile(imagePath);
+        return BitmapFactory.decodeFile(imagePath,bmOptions);
     }
 
     /**
@@ -131,7 +131,7 @@ class BitmapUtils {
                 Locale.getDefault()).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + ".jpg";
         File storageDir = new File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
                         + "/Emojify");
         boolean success = true;
         if (!storageDir.exists()) {
@@ -156,6 +156,8 @@ class BitmapUtils {
             // Show a Toast with the save location
             String savedMessage = context.getString(R.string.saved_message, savedImagePath);
             Toast.makeText(context, savedMessage, Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(context, "NOT SAVED ..!", Toast.LENGTH_SHORT).show();
         }
 
         return savedImagePath;
