@@ -17,7 +17,7 @@ import timber.log.Timber;
 class Emojifier {
 
 
-    private static final float EMOJI_SCALE_FACTOR = .9f;
+    private static final float EMOJI_SCALE_FACTOR = .8f;
     private static final double SMILING_PROB_THRESHOLD = .15;
     private static final double EYE_OPEN_PROB_THRESHOLD = .5;
 
