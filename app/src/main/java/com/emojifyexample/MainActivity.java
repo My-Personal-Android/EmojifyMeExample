@@ -199,10 +199,10 @@ public class MainActivity extends AppCompatActivity {
         // Delete the temporary image file
         BitmapUtils.deleteImageFile(this, mTempPhotoPath);
 
-        // Save the image
-        BitmapUtils.saveImage(this, mResultsBitmap);
+//        // Save the image
+//        BitmapUtils.saveImage(this, mResultsBitmap);
 
-        // Share the image
+        // Share the image and also save it to gallary
         BitmapUtils.shareImage(this, mResultsBitmap);
     }
 
