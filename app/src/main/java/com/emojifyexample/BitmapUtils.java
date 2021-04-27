@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
@@ -15,6 +17,10 @@ import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
 
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -172,19 +178,15 @@ class BitmapUtils {
         return savedImagePath;
     }
 
-    /**
-     * Helper method for sharing an image.
-     *
-     * @param context   The image context.
-     * @param imagePath The path of the image to be shared.
-     */
-    static void shareImage(Context context, String imagePath) {
-        // Create the share intent and start the share activity
-        File imageFile = new File(imagePath);
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("image/*");
-        Uri photoURI = FileProvider.getUriForFile(context, FILE_PROVIDER_AUTHORITY, imageFile);
-        shareIntent.putExtra(Intent.EXTRA_STREAM, photoURI);
-        context.startActivity(shareIntent);
+    static void shareImage(Context context, Bitmap bitmap) {
+
+        String bitmapPath = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap,"title", "Description by Awais Mansha");
+        Uri bitmapUri = Uri.parse(bitmapPath);
+        // use intent to share image
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.setType("image/*");
+        share.putExtra(Intent.EXTRA_STREAM, bitmapUri);
+        context.startActivity(Intent.createChooser(share, "Share Image"));
+
     }
 }

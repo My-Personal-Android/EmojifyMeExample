@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
         BitmapUtils.saveImage(this, mResultsBitmap);
 
         // Share the image
-        BitmapUtils.shareImage(this, mTempPhotoPath);
+        BitmapUtils.shareImage(this, mResultsBitmap);
     }
 
     /**
